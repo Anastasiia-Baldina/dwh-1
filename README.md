@@ -2,7 +2,7 @@
 1) Каталог initdb - DDL скрипты баз данных
 2) Каталог haproxy - настройки ha-proxy для patroni
 3) Кластер Patroni (master + replica) через etcd (3 хоста)
-4) View v_cohort_mart - когортный анализ клиентов
+4) View v_cohort_mart - когортный анализ клиентов (inidb/20-order_service_db.sql)
 5) scripts/csv-report.py - python скрипт вызывающий v_cohort_mart и сохраняющий результат в csv-файл в каталог report
 
 ### Сборка и запуск осуществляется через скрипт
