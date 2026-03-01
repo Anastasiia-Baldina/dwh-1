@@ -108,9 +108,6 @@ def filter_columns(header_cols: Sequence[str], exclude: Sequence[str]) -> list[s
 
 
 def copy_csv(cfg: ConnCfg, spec: LoadSpec) -> bool:
-    """
-    True if loaded; False if skipped/failed. Errors are logged and execution continues.
-    """
     if not spec.csv_path.exists():
         print(f"[SKIP] {spec.db}.{spec.table} (no file: {spec.csv_path})")
         return False
@@ -139,7 +136,6 @@ def copy_csv(cfg: ConnCfg, spec: LoadSpec) -> bool:
     except Exception as e:
         print(f"[ERR]  {spec.db}.{spec.table} failed: {type(e).__name__}: {e}")
 
-        # psycopg2 diagnostics if present
         if hasattr(e, "diag") and e.diag is not None:
             diag = e.diag
             detail = getattr(diag, "message_detail", None)
@@ -159,14 +155,13 @@ def project_root() -> Path:
 def main(argv: list[str]) -> int:
     cfg = env_conn()
     root = project_root()
-    csv_dir = Path(os.getenv("CSV_DIR", str(root / "csv")))
+    csv_dir = Path(os.getenv("CSV_DIR", str(root / "mock_data")))
 
     print(f"==> Waiting DB at {cfg.host}:{cfg.port} as {cfg.user}")
     wait_connect(cfg, "postgres")
 
     ensure_databases(cfg)
 
-    # ---- полный порядок загрузки (FK внутри БД) ----
     specs: list[LoadSpec] = [
         # user_service_db
         LoadSpec("user_service_db", "public.users", csv_dir / "user_service_users.csv"),
@@ -203,7 +198,6 @@ def main(argv: list[str]) -> int:
     print(f"    failed:  {failed}")
     print(f"    skipped: {skipped}")
 
-    # не валим процесс, даже если были ошибки (по вашему требованию)
     return 0
 
 

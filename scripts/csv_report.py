@@ -23,7 +23,7 @@ def with_timestamp_prefix(path: Path) -> Path:
 
 def main(argv: list[str]) -> int:
     # Usage:
-    #   python scripts/export_view_to_csv.py public.v_cohort_mart ./out/cohort.csv
+    #   python scripts/csv_report.py public.v_cohort_mart ./out/cohort.csv
     view_name = argv[1] if len(argv) > 1 else env("VIEW_NAME", "public.v_cohort_mart")
 
     out_arg = argv[2] if len(argv) > 2 else env("OUT_CSV", "")

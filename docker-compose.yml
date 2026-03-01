@@ -81,6 +81,13 @@ services:
 
       PATRONI_SYNCHRONOUS_MODE: "false"
 
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
     volumes:
       - spilo_primary_data:/home/postgres/pgdata
       - ./initdb:/initdb:ro
@@ -116,7 +123,9 @@ services:
     volumes:
       - spilo_replica_data:/home/postgres/pgdata
     networks: [pgnet]
-    depends_on: [patroni-primary]
+    depends_on:
+      patroni-primary:
+        condition: service_healthy
 
   haproxy:
     image: haproxy:2.9
