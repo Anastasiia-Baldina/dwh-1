@@ -1,0 +1,13 @@
+venv/
+env/
+ENV/
+.venv/
+
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+mock_data/
+splio/
+report/*
