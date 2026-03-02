@@ -27,12 +27,12 @@ python scripts/csv_report.py
 python scripts/load_mock_data.py
 ```
 
-### Master connection string 
+### Master connection string (user=postgres,password=postgres)
 1) jdbc:postgresql://localhost:5432/logistics_service_db
 2) jdbc:postgresql://localhost:5432/order_service_db
 3) jdbc:postgresql://localhost:5432/user_service_db
 
-### Replica connection string 
+### Replica connection string (user=postgres,password=postgres)
 1) jdbc:postgresql://localhost:6432/logistics_service_db
 2) jdbc:postgresql://localhost:6432/order_service_db
 3) jdbc:postgresql://localhost:6432/user_service_db
